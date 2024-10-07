@@ -8,12 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.ArrayList;
 
 
-public class HelloController {
+public class PeliculaController {
 
 
     @FXML
@@ -35,19 +36,7 @@ public class HelloController {
     private ListView<Pelicula> lv_listadoPeliculas;
     public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
-    @FXML
-    void initialize() {
-        // Añade un listener para cuando se seleccione una película en el ListView
-        lv_listadoPeliculas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                // Actualiza los campos de texto con la información de la película seleccionada
-                tituloTf.setText(newValue.getTitulo());
-                fechaTf.setText(newValue.getFecha());
-                generoTf.setText(newValue.getGenero());
-                directorTf.setText(newValue.getDirector());
-            }
-        });
-    }
+
 
     @FXML
     void onImportarClick(ActionEvent event) {
@@ -66,6 +55,17 @@ public class HelloController {
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    void onMousearClic(MouseEvent event) {
+        Pelicula pelicula = lv_listadoPeliculas.getSelectionModel().getSelectedItem(); // OBTENGO LA PELI SELECCIONADA
+        if (pelicula != null) {
+            directorTf.setText(pelicula.getDirector());
+            fechaTf.setText(pelicula.getFecha());
+            generoTf.setText(pelicula.getGenero());
+            tituloTf.setText(pelicula.getTitulo());
         }
     }
 }
